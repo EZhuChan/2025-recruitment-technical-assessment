@@ -22,6 +22,26 @@ describe("Task 1", () => {
       const response = await getTask1("");
       expect(response.status).toBe(400);
     });
+
+    it("example3", async () => {
+      const response = await getTask1("Riz@z             RISO00tto     bes    !");
+      expect(response.body).toStrictEqual({ msg: "Rizz Risotto Bes" });
+    });
+
+    it("example4", async () => {
+      const response = await getTask1("Riz@z      *      RISO00tto     bes    !");
+      expect(response.body).toStrictEqual({ msg: "Rizz Risotto Bes" });
+    });
+
+    it("example5", async () => {
+      const response = await getTask1("alpHa-alFR _edo");
+      expect(response.body).toStrictEqual({ msg: "Alpha Alfr Edo" });
+    });
+
+    it("example6", async () => {
+      const response = await getTask1("   alpHa-alFR _edo  ");
+      expect(response.body).toStrictEqual({ msg: "Alpha Alfr Edo" });
+    });
   });
 });
 
@@ -92,6 +112,34 @@ describe("Task 2", () => {
         cookTime: 8,
       });
       expect(resp3.status).toBe(400);
+    });
+
+    it("Add Recipe w/h same ingredients", async () => {
+      const meatball = {
+        type: "recipe",
+        name: "Meatball",
+        requiredItems: [
+          { name: "Beef", quantity: 1 }, 
+          { name: "bread", quantity: 2 }, 
+          { name: "Beef", quantity: 1 }
+        ],
+      };
+      const resp1 = await putTask2(meatball);
+      expect(resp1.status).toBe(400);
+    });
+
+    it("Add Recipe w/h 2+ ingredients", async () => {
+      const meatball = {
+        type: "recipe",
+        name: "Meatball",
+        requiredItems: [
+          { name: "Beef", quantity: 1 }, 
+          { name: "bread", quantity: 2 }, 
+          { name: "butter", quantity: 1 }
+        ],
+      };
+      const resp1 = await putTask2(meatball);
+      expect(resp1.status).toBe(400);
     });
   });
 });
