@@ -14,7 +14,8 @@ const addEntry = (entry: any): {} => {
 		throw new Error('Not a valid entry type');
 	}
 
-	const inCookbook = cookbook.some((item: recipe | ingredient) => item.name === entry.name);
+	const inCookbook = cookbook.some(
+      (item: recipe | ingredient) => item.name === entry.name);
 	if (inCookbook) {
 		throw new Error(`${entry.name} is already in the cookbook`);
 	}
@@ -74,7 +75,7 @@ const getSummary = (name: string): summary => {
  * @returns {ingredInfo[]} - Culmination of all ingredients needed
  */
 
-const sumIngredients = (recipe: recipe, quantity: number) => {
+const sumIngredients = (recipe: recipe, quantity: number): ingredInfo[] => {
   const cookbook = JSON.parse(JSON.stringify(getCookbook()));
   const ingredients = [];
 
