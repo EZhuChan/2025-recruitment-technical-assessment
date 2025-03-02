@@ -20,8 +20,14 @@ export interface ingredient extends cookbookEntry {
   cookTime: number;
 }
 
-export interface ingredientInfo extends requiredItem {
+export interface ingredInfo extends requiredItem {
   cookTime: number;
+}
+
+export interface summary {
+  name: string;
+  cookTime: number;
+  ingredients: requiredItem[];
 }
 
 // =============================================================================
@@ -61,8 +67,6 @@ const parse_handwriting = (recipeName: string): string | null => {
                           .toLowerCase().split(' ')
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
-  
-  console.log(recipeName);
 
   if (recipeName.length === 0) return null;
   
@@ -73,8 +77,7 @@ const parse_handwriting = (recipeName: string): string | null => {
 // Endpoint that adds a CookbookEntry to your magical cookbook
 app.post("/entry", (req:Request, res:Response) => {
   const entry = req.body;
-  console.log(entry);
-
+  
   try {
     const result = addEntry(entry);
     res.status(200).json(result);
@@ -82,6 +85,7 @@ app.post("/entry", (req:Request, res:Response) => {
     res.status(400).json({ error: error.message });
   }
 
+  return;
 });
 
 export function getCookbook() {
@@ -99,8 +103,8 @@ app.get("/summary", (req:Request, res:Request) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-  
-  // res.status(500).send("not yet implemented!")
+
+  return;
 });
 
 // =============================================================================
