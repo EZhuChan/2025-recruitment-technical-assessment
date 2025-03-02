@@ -20,6 +20,10 @@ export interface ingredient extends cookbookEntry {
   cookTime: number;
 }
 
+export interface ingredientInfo extends requiredItem {
+  cookTime: number;
+}
+
 // =============================================================================
 // ==== HTTP Endpoint Stubs ====================================================
 // =============================================================================
@@ -75,7 +79,7 @@ app.post("/entry", (req:Request, res:Response) => {
     const result = addEntry(entry);
     res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ error: error.msg });
+    res.status(400).json({ error: error.message });
   }
 
 });
@@ -87,11 +91,13 @@ export function getCookbook() {
 // [TASK 3] ====================================================================
 // Endpoint that returns a summary of a recipe that corresponds to a query name
 app.get("/summary", (req:Request, res:Request) => {
+  const name = req.query.name as string;
+
   try {
-    const result = getSummary();
+    const result = getSummary(name);
     res.status(200).json(result);
   } catch (error) {
-    res.status(400).json();
+    res.status(400).json({ error: error.message });
   }
   
   // res.status(500).send("not yet implemented!")

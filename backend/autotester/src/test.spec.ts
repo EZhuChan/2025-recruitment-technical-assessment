@@ -115,31 +115,34 @@ describe("Task 2", () => {
     });
 
     it("Add Recipe w/h same ingredients", async () => {
-      const meatball = {
+      const meatloaf = {
         type: "recipe",
-        name: "Meatball",
+        name: "meatloaf",
         requiredItems: [
           { name: "Beef", quantity: 1 }, 
           { name: "bread", quantity: 2 }, 
           { name: "Beef", quantity: 1 }
         ],
       };
-      const resp1 = await putTask2(meatball);
+      const resp1 = await putTask2(meatloaf);
       expect(resp1.status).toBe(400);
+      expect(resp1.body).toStrictEqual({ error: expect.any(String) });
     });
 
     it("Add Recipe w/h 2+ ingredients", async () => {
-      const meatball = {
+      const sushi = {
         type: "recipe",
-        name: "Meatball",
+        name: "sushi",
         requiredItems: [
-          { name: "Beef", quantity: 1 }, 
-          { name: "bread", quantity: 2 }, 
-          { name: "butter", quantity: 1 }
+          { name: "Salmon", quantity: 1 }, 
+          { name: "Soy sauce", quantity: 2 }, 
+          { name: "Rice wine", quantity: 1 },
+          { name: "Seaweed", quantity: 10 },
         ],
       };
-      const resp1 = await putTask2(meatball);
-      expect(resp1.status).toBe(400);
+      const resp1 = await putTask2(sushi);
+      console.log(resp1.body)
+      expect(resp1.status).toBe(200);
     });
   });
 });
